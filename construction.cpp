@@ -13,44 +13,6 @@
 
 using namespace std;
 
-// // profSize: retorna o tamanho que o vetor de professores deve ter
-// size_t profSize (fstream& fileStream) {
-
-// 	string buffer;
-// 	size_t size = 0;
-
-// 	if (fileStream.is_open()) {
-// 		while (getline (fileStream, buffer)) {
-// 			if (buffer.find("(P") != string::npos)
-// 				size++;
-// 			else if (buffer.find("(E") != string::npos)
-// 				break;
-// 		}
-// 	}
-// 	else {
-// 		throw "Erro ao ler o arquivo!";
-// 	}
-// 	return size;
-// }
-
-// // escSize: retorna o tamanho que o vetor de escolas deve ter
-// size_t escSize (fstream& fileStream) {
-
-// 	string buffer;
-// 	size_t size = 0;
-
-// 	if (fileStream.is_open()) {
-// 		while (getline (fileStream, buffer)) {
-// 			if (buffer.find("(E") != string::npos)
-// 				size++;
-// 		}
-// 	}
-// 	else {
-// 		throw "Erro ao ler o arquivo!";
-// 	}
-// 	return size;
-// }
-
 void getProfsEscolas(const string& fileName, vector<Prof>& profs, vector<Escola>& escolas) {
 
   fstream fileStream (fileName);
