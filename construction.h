@@ -6,13 +6,12 @@
 
 #include <string>
 #include <vector>
-#include <pair>
 #include <fstream>
 #include "prof.cpp"
 
 using namespace std;
 
 typedef vector<int> Escola;
-typedef Pair<int, int> Adj;
+typedef pair<int, int> Adj;
 
 void getProfsEscolas(const string& fileName, vector<Prof>& profs, vector<Escola>& escola);

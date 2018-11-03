@@ -11,7 +11,7 @@
 CC = g++
 
 # Flags:
-CFLAGS = -c -g -Wall -std=c++11
+CFLAGS = -c -g -Wall -std=c++11 -Wsign-compare
 
 # modulos
 MODULES = construction.o prof.o
