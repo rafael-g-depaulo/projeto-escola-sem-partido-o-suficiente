@@ -1,3 +1,6 @@
+#ifndef _PROF_CPP_
+#define _PROF_CPP_
+
 #include <vector>
 
 using namespace std;
@@ -18,3 +21,5 @@ class Prof {
     escolas.push_back(esc5);
   }
 };
+
+#endif /*_PROF_CPP_*/

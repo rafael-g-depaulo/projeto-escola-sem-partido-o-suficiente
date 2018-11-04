@@ -14,7 +14,7 @@ CC = g++
 CFLAGS = -c -g -Wall -std=c++11 -Wsign-compare
 
 # modulos
-MODULES = construction.o prof.o
+MODULES = construction.o prof.o empEstavel.o
 
 # Compila o executavel a partir dos .o's
 executavel: $(MODULES) main.o
@@ -31,3 +31,7 @@ construction.o: construction.cpp
 # modulo da classe de professor
 prof.o: prof.cpp
 	$(CC) $(CFLAGS) prof.cpp
+
+# modulo que retorna o emparelhamento estavel
+empEstavel.o: empEstavel.cpp
+	$(CC) $(CFLAGS) empEstavel.cpp
