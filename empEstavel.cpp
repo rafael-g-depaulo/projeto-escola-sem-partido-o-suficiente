@@ -8,7 +8,7 @@ vector<int> getEmpEstavel(int numPares, vector<Prof> profs, vector<Escola> escol
 
   vector<int> ans(profs.size(), -1);
     deque<int> escAseremPreench;
-    for(int i = 0; i < escolas.size(); i++) escAseremPreench.push_back(i);
+    for(unsigned int i = 0; i < escolas.size(); i++) escAseremPreench.push_back(i);
     int vagaSendoOfertada[escolas.size()];
     memset(vagaSendoOfertada, 0, sizeof(vagaSendoOfertada));
 

@@ -18,10 +18,11 @@ int main() {
   vector<int> emparEstavel = getEmpEstavel(NUM_PARES, profs, escolas);
   
   int profInd = 0;
+  cout << "RESULTADO DO EMPARELHAMENTO:" << endl << "Nº do Professor \t Nº da Escola" << endl; 
   for (auto esc: emparEstavel) {
     profInd++;
     if (esc == -1) continue;  // se o professor não foi assinalado a nenhuma escola, continue
-    cout << "prof nº " << profInd << ", esc nº " << esc << endl;
+    cout << " Prof. " << profInd << " \t\t  Escola " << esc << endl;
   }
   
 }
