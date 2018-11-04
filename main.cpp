@@ -1,4 +1,5 @@
 #include "construction.h"
+#include <algorithm>
 #include <iostream>
 #include <queue>
 #include <vector>
@@ -15,9 +16,6 @@ int main() {
   vector<Adj> adj(escolas.size(), pair<int, int>(-1, -1));
 
   int paresQfaltam = NUM_PARES;
-  int controle[escolas.size()];
-  for (int i = 0; i < controle.size; i++)
-    controle[i] = 0;
 
   vector<int> empEst(profs.size(), -1);   // variavel final do emparelhamento
 
@@ -51,7 +49,7 @@ int main() {
 
       if (temp != -1 && (profs[temp].hab > prof.hab || tpref < rankPref))
         continue;
-      if (temp == -1)
+      if (temp != -1)
         paresQfaltam--;
       else
         empEst[temp] = -1;
@@ -59,11 +57,18 @@ int main() {
       empEst[prof.ind] = esc;
       temp = prof.ind;
       tpref = rankPref;
+      // if (prof.ind == profs[1].ind)
+      //   cout << "temp: " << temp << endl;
     }
     vagaAtual[esc]++;
 
     // se a escola não está preenchida, coloque ela de novo na fila
     if (escolas[esc].size() > vagaAtual[esc]) escolasASeremVistas.push_back(esc);
+  }
+
+
+  for (auto a : empEst) {
+    cout << "par est: " << a << endl;
   }
   
 }
