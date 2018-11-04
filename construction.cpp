@@ -17,6 +17,7 @@ void getProfsEscolas(const string& fileName, vector<Prof>& profs, vector<Escola>
 
   fstream fileStream (fileName);
   string buffer;
+  bool jumpFirstSchool = true;
 
   if (!fileStream.is_open())
     return;
@@ -28,7 +29,11 @@ void getProfsEscolas(const string& fileName, vector<Prof>& profs, vector<Escola>
       sscanf(buffer.c_str(), "(P%d, %d): (E%d, E%d, E%d, E%d, E%d)", 
         &ind, &habilitacao, &esc1, &esc2, &esc3, &esc4, &esc5);
 
-      profs.push_back(Prof(ind, habilitacao, esc1, esc2, esc3, esc4, esc5));
+      profs.push_back(Prof(ind-1, habilitacao, esc1, esc2, esc3, esc4, esc5));
+    }
+    // pule a primeira escola. da merda se n fizer isso
+    else if (jumpFirstSchool && buffer.find("(E") != string::npos) {
+      jumpFirstSchool = false;
     }
     else if (buffer.find("(E") != string::npos) {
       if (buffer.length() < 10) {

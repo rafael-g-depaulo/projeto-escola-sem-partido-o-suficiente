@@ -1,10 +1,11 @@
 #include "construction.h"
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <queue>
 #include <vector>
 
-#define NUM_PARES 70
+#define NUM_PARES 69
 
 using namespace std;
 
@@ -13,62 +14,53 @@ int main() {
   vector<Escola> escolas;
 
   getProfsEscolas("entradaProj3TAG.txt", profs, escolas);
-  vector<Adj> adj(escolas.size(), pair<int, int>(-1, -1));
 
   int paresQfaltam = NUM_PARES;
 
-  vector<int> empEst(profs.size(), -1);   // variavel final do emparelhamento
+  vector<int> ans(profs.size(), -1);
+    deque<int> escAseremPreench;
+    for(int i = 0; i < escolas.size(); i++) escAseremPreench.push_back(i);
+    int vagaSendoOfertada[escolas.size()];
+    memset(vagaSendoOfertada, 0, sizeof(vagaSendoOfertada));
 
-  deque<int> escolasASeremVistas;
-  // inserir as escolas no deque
-  for (int i = 0; i < escolas.size(); i++)
-    escolasASeremVistas.push_back(i);
+    while(!escAseremPreench.empty() && paresQfaltam > 0){
+        int escAtual = escAseremPreench[0],
+        habVagaAtual = escolas[escAtual][vagaSendoOfertada[escAtual]],
+        temp = -1, trank = 100;
+        escAseremPreench.pop_front();
+        for(auto prof: profs){
+            int rank = -1;
+            if (prof.escolas[0] == escAtual) rank = 0;
+            if (prof.escolas[1] == escAtual) rank = 1;
+            if (prof.escolas[2] == escAtual) rank = 2;
+            if (prof.escolas[3] == escAtual) rank = 3;
+            if (prof.escolas[4] == escAtual) rank = 4;
+            if (rank == -1) continue;
 
-  int vagaAtual[escolas.size()];  // a vaga atual que está sendo vista para essa escola
-  for (int i = 0; i < escolas.size(); i++)
-    vagaAtual[i] = 0;
-
-  while(!escolasASeremVistas.empty() && paresQfaltam > 0) {
-    int esc = escolasASeremVistas[0];
-    int habEscAt = escolas[esc][vagaAtual[esc]]; // a hab necessaria para a vaga atual da escola atual
-    int temp = -1;                               // professor mais adequado pra vaga dos mais visitados
-    int tpref = 999999;                          // preferencia de temp pela escola esc
-
-    escolasASeremVistas.pop_front();
-
-    for (auto prof: profs) {
-      // se o professor não quer essa escola, vá para o próximo
-      if (find(prof.escolas.begin(), prof.escolas.end(), esc) != prof.escolas.end())
-        continue;
-
-      int rankPref = -1;  // a ordem da escola nas preferencias do professor
-      for (auto escPreten : prof.escolas) {
-        rankPref++;
-        if (escPreten == esc) break;
-      }
-
-      if (temp != -1 && (profs[temp].hab > prof.hab || tpref < rankPref))
-        continue;
-      if (temp != -1)
-        paresQfaltam--;
-      else
-        empEst[temp] = -1;
-
-      empEst[prof.ind] = esc;
-      temp = prof.ind;
-      tpref = rankPref;
-      // if (prof.ind == profs[1].ind)
-      //   cout << "temp: " << temp << endl;
+            if (rank == -1) continue;                 // se o prof n quer essa escola, va para o próximo
+            if (prof.hab < habVagaAtual)  continue;   // se o prof não tem habilitação para essa vaga
+            if (ans[prof.ind] != -1) continue;        // se prof já foi alocado para alguma escola
+            
+            // se já tem um professor candidato que é melhor do que esse, vá para o próximo
+            if (((temp != -1) and ((profs[temp].hab > prof.hab) or (trank < rank)))) continue;
+            // se ainda não tem um professor alocado nessa vaga, considere essa vaga como alocada
+            // e continue procurando por um professor melhor para substituir o atual nessa vaga
+            if (temp == -1) paresQfaltam--;
+            // se tinha um professor anteriormente alocado, que não é tão bom candidato para essa vaga
+            // como o prof atual, desaloque o professor antigo
+            else ans[temp] = -1;
+            // se chegou aqui, o prof atual é melhor do que o temporario, coloque ele como melhor candidato
+            // atual para a vaga, e aloque ele para a vaga
+            ans[prof.ind] = escAtual, temp = prof.ind, trank = rank;
+        }
+        vagaSendoOfertada[escAtual]++;
+        if ((int) escolas[escAtual].size() > vagaSendoOfertada[escAtual]) escAseremPreench.push_back(escAtual); // se numero atual de vagas escolas > a vaga atual preenchida, bota a escola na lista escAseremPreench
     }
-    vagaAtual[esc]++;
 
-    // se a escola não está preenchida, coloque ela de novo na fila
-    if (escolas[esc].size() > vagaAtual[esc]) escolasASeremVistas.push_back(esc);
-  }
-
-
-  for (auto a : empEst) {
-    cout << "par est: " << a << endl;
+  int profInd = 0;
+  for (auto esc: ans) {
+    if (esc == -1) continue;  // se o professor não foi assinalado a nenhuma escola, continue
+    cout << "prof nº " << ++profInd << ", esc nº " << esc << endl;
   }
   
 }
