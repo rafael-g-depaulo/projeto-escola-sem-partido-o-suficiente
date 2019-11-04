@@ -1,3 +1,8 @@
+// Projeto 3 de Teoria e Aplicação de Grafos, Turma A
+// Prof.: Díbio
+// Autores: Rafael Gonçalves de Paulo (17/0043959)
+//          João Lucas Azevedo Yamin Rodrigues da Cunha (17/0013731)
+
 #include "empEstavel.h"
 
 using namespace std;
@@ -8,7 +13,7 @@ vector<int> getEmpEstavel(int numPares, vector<Prof> profs, vector<Escola> escol
 
   vector<int> ans(profs.size(), -1);
     deque<int> escAseremPreench;
-    for(int i = 0; i < escolas.size(); i++) escAseremPreench.push_back(i);
+    for(unsigned int i = 0; i < escolas.size(); i++) escAseremPreench.push_back(i);
     int vagaSendoOfertada[escolas.size()];
     memset(vagaSendoOfertada, 0, sizeof(vagaSendoOfertada));
 
