@@ -23,5 +23,4 @@ int main() {
     if (esc == -1) continue;  // se o professor não foi assinalado a nenhuma escola, continue
     cout << "prof nº " << profInd << ", esc nº " << esc << endl;
   }
-  
 }
